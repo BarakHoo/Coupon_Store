@@ -15,7 +15,9 @@ It runs the app in the development mode.
 Open http://localhost:3000 to view it in the browser.
 
 Use email "admin@admin.com" coupled with password "admin" to access the admin's interface.
+
 use email "updatedEmail" coupled with password "updatePassword" to access the company's interface.
+
 use email "email" coupled with password "updatedPassword" to access the customer's interface.
 
 Thank you!
