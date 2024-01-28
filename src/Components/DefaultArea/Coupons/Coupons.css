@@ -1,0 +1,18 @@
+.Coupons {
+	text-align: center;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+html::-webkit-scrollbar {
+	width: 5px;
+}
+
+html::-webkit-scrollbar-thumb {
+	background-color: transparent;
+}

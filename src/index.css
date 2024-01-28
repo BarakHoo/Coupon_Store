@@ -1,0 +1,20 @@
+body, html, #root {
+  margin: 0;
+  height: 100%;
+  overflow: auto; /* Ensure that the scrollbars are always visible, even if there's no content overflow */
+}
+
+body {
+  background-image: linear-gradient(lightskyblue, blue);
+  color: white;
+}
+
+/* Add scrollbar styles for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f0f0f0; /* Set to your desired scrollbar thumb color */
+}
+

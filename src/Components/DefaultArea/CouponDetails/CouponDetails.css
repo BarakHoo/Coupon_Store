@@ -1,0 +1,10 @@
+.CouponDetails {
+	text-align: center;
+}
+
+.CouponDetails img {
+	width: 100px; /* Set a specific width for the image */
+	height: 100px; /* Set a specific height for the image */
+	object-fit: cover; /* or use 'contain' based on your preference */
+	text-align: center;
+}

@@ -1,0 +1,13 @@
+.Layout {
+	
+}
+
+
+Toastifytoast-theme--light.Toastifytoast--error {
+    background-color: rgb(238, 112, 112);
+    color: white;
+}
+.Toastifytoast-theme--light.Toastifytoast--success{
+    background-color: lightgreen;
+    color: white;
+}

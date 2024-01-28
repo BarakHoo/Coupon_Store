@@ -1,0 +1,18 @@
+.CouponCard {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.CouponCard img {
+    width: 100px; /* Set a specific width for the image */
+    height: 100px; /* Set a specific height for the image */
+    object-fit: cover; /* or use 'contain' based on your preference */
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-left: 48px;
+}
