@@ -10,6 +10,8 @@ After you have ran the backend part of the project and have the schema with the 
 
 Frontend instructions:
 
+Please install the required modules for the best experience (Should pop up in your IDE when you open the project).
+
 In the project directory, you can run npm start
 It runs the app in the development mode.
 Open http://localhost:3000 to view it in the browser.
