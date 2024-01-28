@@ -35,9 +35,9 @@ public class CompanyController {
         return coupon;
     }
 
-    @DeleteMapping("/deletecoupon")
-    public String deleteCoupon(@RequestBody Coupon coupon) throws CouponException, UnauthorizedException {
-        getFacade().deleteCoupon(coupon);
+    @DeleteMapping("/deletecoupon/{id}")
+    public String deleteCoupon(@PathVariable int id) throws CouponException, UnauthorizedException {
+        getFacade().deleteCoupon(id);
         return "Coupon deleted!";
     }
 
@@ -47,18 +47,25 @@ public class CompanyController {
     }
 
     @GetMapping("/getcouponsbycategory")
-    public List<Coupon> getCompanyCouponsByCategory(Category category) throws UnauthorizedException {
+    public List<Coupon> getCompanyCouponsByCategory(@RequestParam Category category) throws UnauthorizedException {
         return getFacade().getCompanyCouponsByCategory(category);
     }
 
+
+
     @GetMapping("/getcouponsbyprice")
-    public List<Coupon> getCompanyCouponsByPrice(double price) throws CompanyException, UnauthorizedException {
+    public List<Coupon> getCompanyCouponsByPrice(@RequestParam double price) throws CompanyException, UnauthorizedException {
         return getFacade().getCompanyCouponsByMaxPrice(price);
     }
 
     @GetMapping("/companydetails")
     public Company getCompanyDetails() throws CompanyException, UnauthorizedException {
         return getFacade().getCompanyDetails();
+    }
+
+    @GetMapping("/getcouponsbycategoryandmaxprice")
+    public List<Coupon> getCompanyCouponsByCategoryAndMaxPrice(@RequestParam double price, Category category) throws UnauthorizedException, CompanyException {
+       return getFacade().getCouponsByMaxPriceAndCategory(price, category);
     }
 
     @PutMapping("/updatecoupon")
