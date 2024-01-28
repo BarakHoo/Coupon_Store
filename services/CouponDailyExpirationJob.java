@@ -31,7 +31,7 @@ public class CouponDailyExpirationJob implements Runnable {
                 ArrayList<Coupon> expiredCoupons = couponRepository.findCouponsByEndDateBefore(currentDate);
                 for (Coupon coupon : expiredCoupons){
                     System.out.println("Coupon" + coupon.getId() + "is expired, proceeding to delete...");
-                    companyService.deleteCoupon(coupon);
+                    companyService.deleteCoupon(coupon.getId());
                 }
                     // Sleep for 24 hours (86400000 milliseconds) before the next check
                     Thread.sleep(86400000);

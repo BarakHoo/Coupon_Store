@@ -19,7 +19,6 @@ public class Coupon {
     @Setter(AccessLevel.NONE)
     private int id;
     @ManyToOne
-    @Setter(AccessLevel.NONE)
     @JsonIgnore
     private Company company;
     @Enumerated(EnumType.STRING)

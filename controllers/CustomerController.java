@@ -3,6 +3,7 @@ package com.example.JohnCouponPart2.controllers;
 import com.example.JohnCouponPart2.beans.Category;
 import com.example.JohnCouponPart2.beans.Coupon;
 import com.example.JohnCouponPart2.beans.Customer;
+import com.example.JohnCouponPart2.exceptions.CompanyException;
 import com.example.JohnCouponPart2.exceptions.CouponException;
 import com.example.JohnCouponPart2.exceptions.CustomerException;
 import com.example.JohnCouponPart2.exceptions.UnauthorizedException;
@@ -33,13 +34,18 @@ public class CustomerController {
     }
 
     @GetMapping("/getcustomercouponsbycategory")
-    public List<Coupon> getCustomerCouponsByCategory(Category category) throws UnauthorizedException {
+    public List<Coupon> getCustomerCouponsByCategory(@RequestParam Category category) throws UnauthorizedException {
         return getCustomerFacade().getCustomerCouponsByCategory(category);
     }
 
     @GetMapping("/getcustomercouponsbyprice")
-    public List<Coupon> getCustomerCouponsByMaxPrice(double price) throws UnauthorizedException {
+    public List<Coupon> getCustomerCouponsByMaxPrice(@RequestParam double price) throws UnauthorizedException {
         return getCustomerFacade().getCustomerCouponsByMaxPrice(price);
+    }
+
+    @GetMapping("/getcouponsbycategoryandmaxprice")
+    public List<Coupon> getCompanyCouponsByCategoryAndMaxPrice(@RequestParam double price, Category category) throws UnauthorizedException, CustomerException {
+        return getCustomerFacade().getCouponsByMaxPriceAndCategory(price, category);
     }
 
     @GetMapping("/getcustomerdetails")
@@ -52,6 +58,8 @@ public class CustomerController {
         getCustomerFacade().purchaseCoupon(coupon);
         return coupon;
     }
+
+
 
     private CustomerService getCustomerFacade() throws UnauthorizedException {
         String token = request.getHeader("Authorization").replace("Bearer ", "");

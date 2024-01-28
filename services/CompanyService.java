@@ -47,6 +47,8 @@ public class CompanyService extends ClientService {
         // Check if a coupon with the same title already exists for the company
         if (!couponRepository.existsCouponByTitleAndCompanyId(coupon.getTitle(), this.companyID)) {
             // Save the new coupon
+            Company company = companyRepository.findById(this.companyID).orElseThrow();
+            coupon.setCompany(company);
             couponRepository.save(coupon);
             return coupon;
         } else {
@@ -58,9 +60,11 @@ public class CompanyService extends ClientService {
     public Coupon updateCoupon(Coupon coupon) throws CouponException {
         // Check if the coupon exists
         if (couponRepository.existsById(coupon.getId())) {
+            Company company = companyRepository.findById(this.companyID).orElseThrow();
+            coupon.setCompany(company);
             // Check if the title is being changed
             if (!isTitleUnchanged(coupon)) {
-                List<Coupon> companyCoupons = couponRepository.findCouponsByCompanyId(coupon.getCompany().getId());
+                List<Coupon> companyCoupons = couponRepository.findCouponsByCompanyId(this.companyID);
                 companyCoupons.remove(coupon);
 
                 // Make sure we're not changing the coupon's title to one that already exists within the company
@@ -83,11 +87,11 @@ public class CompanyService extends ClientService {
 
 
     // Method for deleting a coupon for the company
-    public void deleteCoupon(Coupon coupon) throws CouponException {
+    public void deleteCoupon(int id) throws CouponException {
         // Check if the coupon exists
-        if (couponRepository.existsById(coupon.getId())) {
+        if (couponRepository.existsById(id)) {
             // Delete the coupon
-            couponRepository.delete(coupon);
+            couponRepository.deleteById(id);
         } else {
             throw new CouponException("Coupon doesn't exist!");
         }
@@ -105,8 +109,16 @@ public class CompanyService extends ClientService {
 
     // Method for getting a list of coupons for the company with a price less than or equal to the specified price
     public ArrayList<Coupon> getCompanyCouponsByMaxPrice(double price) throws CompanyException {
-        if(price > 0){
+        if(price >= 0){
             return couponRepository.findCouponsByPriceLessThanEqualAndCompanyId(price, this.companyID);
+        }else{
+            throw new CompanyException("Price cannot be below 0");
+        }
+    }
+
+    public ArrayList<Coupon> getCouponsByMaxPriceAndCategory(double price, Category category) throws CompanyException {
+        if(price>=0){
+            return couponRepository.findCouponsByPriceLessThanEqualAndCategory(price, category);
         }else{
             throw new CompanyException("Price cannot be below 0");
         }
@@ -116,6 +128,7 @@ public class CompanyService extends ClientService {
     public Company getCompanyDetails() throws CompanyException {
         return companyRepository.findById(this.companyID).orElseThrow(() -> new CompanyException("Company doesn't exist!"));
     }
+
 
 
 

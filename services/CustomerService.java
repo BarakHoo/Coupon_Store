@@ -5,6 +5,7 @@ import com.example.JohnCouponPart2.Repositories.CustomerRepository;
 import com.example.JohnCouponPart2.beans.Category;
 import com.example.JohnCouponPart2.beans.Coupon;
 import com.example.JohnCouponPart2.beans.Customer;
+import com.example.JohnCouponPart2.exceptions.CompanyException;
 import com.example.JohnCouponPart2.exceptions.CouponException;
 import com.example.JohnCouponPart2.exceptions.CustomerException;
 import jakarta.transaction.Transactional;
@@ -111,6 +112,11 @@ public class CustomerService extends ClientService {
         return customersListByCategory;
     }
 
+
+
+
+
+
     // Get a list of coupons owned by the customer with a price less than or equal to the specified price
     public List<Coupon> getCustomerCouponsByMaxPrice(double price) {
         // Retrieve a list of coupons with a price less than or equal to the specified price
@@ -127,6 +133,24 @@ public class CustomerService extends ClientService {
             }
         }
         return customerCouponsByMaxPrice;
+    }
+
+    public ArrayList<Coupon> getCouponsByMaxPriceAndCategory(double price, Category category) throws CustomerException {
+        if(price>=0){
+            List<Coupon> couponList = couponRepository.findCouponsByPriceLessThanEqualAndCategory(price, category);
+            ArrayList<Coupon> customerCouponList = new ArrayList<>();
+            for(Coupon coupon: couponList){
+                Set<Customer> customerSet = coupon.getCustomers();
+                for(Customer customer: customerSet){
+                    if(this.customerID == customer.getId()){
+                        customerCouponList.add(coupon);
+                    }
+                }
+            }
+            return customerCouponList;
+        }else{
+            throw new CustomerException("Price cannot be below 0");
+        }
     }
 
 

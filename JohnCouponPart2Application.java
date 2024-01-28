@@ -84,7 +84,7 @@ public class JohnCouponPart2Application {
 					companyService.addCoupon(coupon);
 					companyService.addCoupon(coupon2);
 					customerService.purchaseCoupon(coupon);
-					companyService.deleteCoupon(coupon);
+					companyService.deleteCoupon(coupon.getId());
 					companyService.addCoupon(coupon);
 					customerService.purchaseCoupon(coupon);
 					System.out.println(customerService.getCustomerDetails());
