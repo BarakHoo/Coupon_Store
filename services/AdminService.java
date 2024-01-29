@@ -117,6 +117,17 @@ public class AdminService extends ClientService {
     }
 
 
+    public List<Coupon> getCompanyCoupons(int id){
+        if (couponRepository.findCouponsByCompanyId(id)!=null){
+            return couponRepository.findCouponsByCompanyId(id);
+        }
+        else{
+            return null;
+        }
+
+    }
+
+
     // Method for deleting a customer
     public void deleteCustomer(int id) throws CustomerException {
         // Check if the customer exists

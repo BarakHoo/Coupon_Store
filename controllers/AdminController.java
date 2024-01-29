@@ -1,6 +1,7 @@
 package com.example.JohnCouponPart2.controllers;
 
 import com.example.JohnCouponPart2.beans.Company;
+import com.example.JohnCouponPart2.beans.Coupon;
 import com.example.JohnCouponPart2.beans.Customer;
 import com.example.JohnCouponPart2.exceptions.CompanyException;
 import com.example.JohnCouponPart2.exceptions.CustomerException;
@@ -60,6 +61,11 @@ public class AdminController {
     @GetMapping("/getcustomers")
     public List<Customer> getAllCustomers() throws UnauthorizedException {
         return getAdminFacade().getAllCustomers();
+    }
+
+    @GetMapping("/getcompanycoupons")
+    public List<Coupon> getCompanyCoupons(@RequestParam int id) throws UnauthorizedException {
+        return getAdminFacade().getCompanyCoupons(id);
     }
 
     @GetMapping("/getcompany/{id}")
