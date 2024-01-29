@@ -1,9 +1,7 @@
-// CouponCard.tsx
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import "./CouponCard.css";
-import company from "../../../Models/Company";
 
 interface CouponProps {
     id: number;
@@ -22,14 +20,12 @@ interface CouponProps {
 function CouponCard({ id, title, description, startDate, endDate, amount, price, image }: CouponProps): JSX.Element {
     return (
         <Card className="CouponCard">
-            <NavLink to={"/coupons/" + id}>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={image}
-                    alt={title}
-                />
-            </NavLink>
+
+            <CardMedia
+                component="img"
+                height="140"
+                image={image}
+                alt={title}/>
             <CardContent>
                 <Typography variant="body1" color="text.secondary">
                     <strong>{title}</strong>
@@ -49,6 +45,9 @@ function CouponCard({ id, title, description, startDate, endDate, amount, price,
                 <Typography variant="body2" color="text.secondary">
                     Expires at: {endDate.toString()}
                 </Typography>
+                <NavLink to={"/coupons/" + id}>
+                    More Details
+                </NavLink>
             </CardContent>
         </Card>
     );

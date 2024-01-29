@@ -34,6 +34,7 @@ function Login(): JSX.Element {
             {authStore.getState().token.length === 0 ? (
                 <FormControl>
                     <FormLabel>Welcome to John Coupon! Please log in.</FormLabel>
+                    <br/>
                     <TextField variant="outlined" label="Email" id="email" {...register("email")} />
                     <TextField variant="outlined" label="Password" id="password" type="password" {...register("password")} />
                     <RadioGroup
@@ -46,6 +47,7 @@ function Login(): JSX.Element {
                         <FormControlLabel value="1" control={<Radio {...register("clientType")} />} label="Company" />
                         <FormControlLabel value="2" control={<Radio {...register("clientType")} />} label="Customer" />
                     </RadioGroup>
+                    <br/>
                     <Button variant="contained" onClick={handleSubmit(doLogin)}>Log In</Button>
                 </FormControl>
             ) : (

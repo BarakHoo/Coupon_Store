@@ -1,9 +1,10 @@
 .Customers {
-
-}
-
-
-.getAllCustomers{
     text-align: center;
-
+    display: flex;
 }
+
+.AddCustomerButton {
+    margin-bottom: 20px;
+    text-align: center;
+}
+

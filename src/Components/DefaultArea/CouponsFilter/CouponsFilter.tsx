@@ -13,11 +13,11 @@ import Coupon from "../../../Models/Coupon";
 import generalService from "../../../Services/GeneralService";
 import errorHandler from "../../../Services/ErrorHandler";
 import Category from "../../../Models/Category";
-
+import './CouponsFilter.css';
 
 function CouponsFilter(): JSX.Element {
     const [couponList, setCouponList] = useState<Coupon[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null); // Use Category type
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [maxPrice, setMaxPrice] = useState<number>(0);
     const [buttonClicked, setButtonClicked] = useState(false);
     const [showNoCouponsInfo, setShowNoCouponsInfo] = useState(false);
@@ -83,7 +83,7 @@ function CouponsFilter(): JSX.Element {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "16px" }}>
+        <div className="CouponsFilter">
             <FormControl style={{ margin: "8px", minWidth: "120px" }}>
                 <InputLabel id="category-label">Select Category</InputLabel>
                 <Select
@@ -111,7 +111,7 @@ function CouponsFilter(): JSX.Element {
 
             <div className="couponList">
                 {couponList.map((coupon) => (
-                    <div key={coupon.id}>
+                    <div key={coupon.id} className="couponListItem">
                         <CouponCard
                             id={coupon.id}
                             title={coupon.title}

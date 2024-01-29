@@ -1,6 +1,7 @@
 import axios from "axios";
 import Customer from "../Models/Customer";
 import Company from "../Models/Company";
+import Coupon from "../Models/Coupon";
 
 class AdminService{
 
@@ -23,6 +24,12 @@ class AdminService{
     public async getOneCompany(id:number){
         const companyResponse = await axios.get<Company>("http://localhost:8080/admin/getcompany/" + id)
         return companyResponse.data;
+    }
+
+    public async getCompanyCoupons(id:number){
+        const companyResponse = await axios.get<Coupon[]>(`http://localhost:8080/admin/getcompanycoupons?id=${id}`)
+        return companyResponse.data;
+
     }
 
     public async addCustomer(customer: Customer){

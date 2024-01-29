@@ -1,4 +1,19 @@
 .CouponsFilter {
-	display: flex;
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+.CouponsFilter .couponList {
+    width: 100%;
+    display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+}
+
+.CouponsFilter .couponList .couponListItem {
+    width: 300px; /* Adjust the width as needed */
+    margin-left: 8px;
+    text-align: center; /* To center the content within each coupon item */
 }

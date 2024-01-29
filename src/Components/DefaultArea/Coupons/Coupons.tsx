@@ -26,7 +26,7 @@ function Coupons(): JSX.Element {
 
     const settings = {
         dots: true,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 4, // Display 3 items at a time
         slidesToScroll: 1,
