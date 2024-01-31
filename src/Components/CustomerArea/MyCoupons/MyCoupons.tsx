@@ -1,11 +1,17 @@
-import "./MyCoupons.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Button } from "@mui/material";
 import Coupon from "../../../Models/Coupon";
 import customerService from "../../../Services/CustomerService";
 import errorHandler from "../../../Services/ErrorHandler";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import CouponCard from "../../DefaultArea/CouponCard/CouponCard";
-import {NavLink} from "react-router-dom";
-import {Button} from "@mui/material";
+
+import "./MyCoupons.css";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function MyCoupons(): JSX.Element {
     const [couponList, setCouponList] = useState<Coupon[] | undefined>();
@@ -17,29 +23,41 @@ function MyCoupons(): JSX.Element {
             .catch((e) => errorHandler.showError(e));
     }, []);
 
+    const settings = {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        nextArrow: <ArrowForwardIcon />,
+        prevArrow: <ArrowBackIcon />,
+    };
+
     return (
         <div className="MyCoupons">
             <Button variant="contained" color="primary" component={NavLink} to="/mycoupons/filters">
                 Advanced Search
             </Button>
-            <br/>
-            {couponList ? (
-                couponList.map((c) => (
-                    <CouponCard
-                        key={c.id}
-                        id={c.id}
-                        title={c.title}
-                        description={c.description}
-                        startDate={c.startDate}
-                        endDate={c.endDate}
-                        amount={c.amount}
-                        price={c.price}
-                        image={c.image}
-                    />
-                ))
-            ) : (
-                <p>Loading coupons...</p>
-            )}
+            <br />
+            <Slider {...settings}>
+                {couponList ? (
+                    couponList.map((c) => (
+                        <CouponCard
+                            key={c.id}
+                            id={c.id}
+                            title={c.title}
+                            description={c.description}
+                            startDate={c.startDate}
+                            endDate={c.endDate}
+                            amount={c.amount}
+                            price={c.price}
+                            image={c.image}
+                        />
+                    ))
+                ) : (
+                    <p>Loading coupons...</p>
+                )}
+            </Slider>
         </div>
     );
 }

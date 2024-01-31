@@ -37,7 +37,7 @@ function AddCoupon(): JSX.Element {
                 })
                 .catch(err => errorHandler.showError(err));
 
-            if (new Date(coupon.startDate) >= new Date(coupon.endDate)) {
+            if (new Date(coupon.startDate) > new Date(coupon.endDate)) {
                 toast.error("Start date must be before the expiration date");
                 return;
             }

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/system";
 import Company from "../../../../Models/Company";
 import adminService from "../../../../Services/AdminService";
 import errorHandler from "../../../../Services/ErrorHandler";
-import Coupon from "../../../../Models/Coupon";
-import CouponCard from "../../../DefaultArea/CouponCard/CouponCard";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
     textAlign: "center",
@@ -45,17 +43,12 @@ function CompanyDetails(): JSX.Element {
     const id: number = +params.id!;
 
     const [company, setCompany] = useState<Company | undefined>();
-    const [couponList, setCouponList] = useState<Coupon[]>([]);
 
     useEffect(() => {
         const fetchCompanyDetails = async () => {
             try {
                 const companyDetails = await adminService.getOneCompany(id);
                 setCompany(companyDetails);
-
-                // Fetch company's coupons
-                const coupons = await adminService.getCompanyCoupons(id);
-                setCouponList(coupons);
             } catch (e) {
                 errorHandler.showError(e);
             }
@@ -76,22 +69,13 @@ function CompanyDetails(): JSX.Element {
                             ID: {company?.id}
                         </Typography>
                         <Typography variant="h6" component="div">
-                            {company?.name}
+                            Company Name: {company?.name}
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="h6">
                             Email: {company?.email}
                         </Typography>
                         <Typography variant="h6" gutterBottom>
-                            Company Coupons:
-                            {couponList.length > 0 ? (
-                                <div className="CouponsList">
-                                    {couponList.map((coupon) => (
-                                        <CouponCard key={coupon.id} {...coupon} />
-                                    ))}
-                                </div>
-                            ) : (
-                                <span>No coupons available.</span>
-                            )}
+                            <NavLink to={`/companycoupons/${id}`}>Company Coupons</NavLink>
                         </Typography>
                     </StyledCompanyInfo>
                 </StyledCompanyDetails>

@@ -1,12 +1,11 @@
 import "./Companies.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Company from "../../../../Models/Company";
 import adminService from "../../../../Services/AdminService";
 import errorHandler from "../../../../Services/ErrorHandler";
 import CompanyCard from "../CompanyCard/CompanyCard";
 import { NavLink } from "react-router-dom";
-
-
+import Button from "@mui/material/Button";
 
 function Companies(): JSX.Element {
     const [companyList, setCompanyList] = useState<Company[]>([]);
@@ -19,11 +18,17 @@ function Companies(): JSX.Element {
     }, []);
 
     return (
+        <div className="AddCompanyButton"> {/* Changed class name to match AddCustomerButton */}
+            <NavLink to="/addcompany">
+                <Button
+                    variant="contained"
+                    color="success"
+                >
+                    Add a new company
+                </Button>
+            </NavLink>
+            <br />
             <div className="Companies">
-                <NavLink to="/addcompany" >
-                    <input type="button" value="Add a new company"/>
-                </NavLink>
-                <br/>
                 {companyList.map((company) => (
                     <CompanyCard
                         key={company.id}
@@ -33,7 +38,7 @@ function Companies(): JSX.Element {
                     />
                 ))}
             </div>
-
+        </div>
     );
 }
 

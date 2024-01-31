@@ -1,18 +1,34 @@
-import "./UpdateCompany.css";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/system";
 import Company from "../../../../Models/Company";
-import {useNavigate, useParams} from "react-router-dom";
-import {useForm} from "react-hook-form";
 import adminService from "../../../../Services/AdminService";
-import {useEffect, useState} from "react";
 import errorHandler from "../../../../Services/ErrorHandler";
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    maxWidth: 400,
+    margin: "auto",
+}));
+
+const StyledForm = styled("form")({
+    marginTop: "20px",
+});
 
 function UpdateCompany(): JSX.Element {
     const params = useParams();
-    const id = +params.id!
-    const {register, handleSubmit, formState, setValue} = useForm<Company>();
+    const id = +params.id!;
+    const { register, handleSubmit, formState, setValue } = useForm<Company>();
     const navigate = useNavigate();
     const [company, setCompany] = useState<Company>();
-
 
     useEffect(() => {
         adminService.getOneCompany(id).then((c) => {
@@ -22,70 +38,92 @@ function UpdateCompany(): JSX.Element {
                 setValue("email", c.email);
                 setValue("password", c.password);
             } else {
-                console.log("Company not found!")
-                navigate("/companies")
+                console.log("Company not found!");
+                navigate("/companies");
             }
-        }).catch((err) => errorHandler.showError(err))
+        }).catch((err) => errorHandler.showError(err));
     }, []);
 
-
     function sendForm(company: Company) {
-        company.id = id
+        company.id = id;
 
-
-        adminService.updateCompany(company).then((c) => {
-            console.log("Company updated!")
-            navigate("/companies")
-        }).catch((err) => errorHandler.showError(err))
-
+        adminService.updateCompany(company).then(() => {
+            console.log("Company updated!");
+            navigate("/companies");
+        }).catch((err) => errorHandler.showError(err));
     }
 
+    const inputProps = {
+        style: { color: "black" }, // Set the text color
+    };
+
+    const labelProps = {
+        style: { color: "black" }, // Set the label color
+        shrink: true, // Set the shrink state to true
+    };
+
     return (
-        <div className="UpdateCompany">
-            <form onSubmit={handleSubmit(sendForm)}>
-                <input
-                    type="text"
-                    id="name"
-                    disabled
-                    {...register("name", {
-                        required: {message: "Must enter name!", value: true},
-                    })}
-                />
-                <br/>
-                {formState.errors?.name && (
-                    <span>{formState.errors?.name?.message}</span>
-                )}
-
-                <input
-                    type="email"
-                    placeholder="Enter company email"
-                    id="email"
-                    {...register("email", {
-                        required: {message: "Must enter email!", value: true},
-                    })}
-                />
-                <br/>
-                {formState.errors?.email && (
-                    <span>{formState.errors?.email?.message}</span>
-                )}
-                <input
-                    type="password"
-                    placeholder="Enter company password"
-                    id="password"
-                    {...register("password", {
-                        required: {message: "Must enter password!", value: true},
-                    })}
-                />
-                <br/>
-                {formState.errors?.password && (
-                    <span>{formState.errors?.password?.message}</span>
-                )}
-
-
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-);
+        <StyledPaper elevation={3}>
+            <Typography variant="h5" gutterBottom>
+                Update Company
+            </Typography>
+            <StyledForm onSubmit={handleSubmit(sendForm)}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Company Name"
+                            variant="outlined"
+                            inputProps={inputProps}
+                            InputLabelProps={labelProps}
+                            {...register("name", {
+                                required: { message: "Must enter company name!", value: true },
+                            })}
+                            disabled
+                        />
+                        {formState.errors?.name && (
+                            <span style={{ color: "red" }}>{formState.errors?.name?.message}</span>
+                        )}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Company Email"
+                            variant="outlined"
+                            type="email"
+                            inputProps={inputProps}
+                            InputLabelProps={labelProps}
+                            {...register("email", {
+                                required: { message: "Must enter company email!", value: true },
+                            })}
+                        />
+                        {formState.errors?.email && (
+                            <span style={{ color: "red" }}>{formState.errors?.email?.message}</span>
+                        )}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Company Password"
+                            variant="outlined"
+                            type="password"
+                            inputProps={inputProps}
+                            InputLabelProps={labelProps}
+                            {...register("password", {
+                                required: { message: "Must enter company password!", value: true },
+                            })}
+                        />
+                        {formState.errors?.password && (
+                            <span style={{ color: "red" }}>{formState.errors?.password?.message}</span>
+                        )}
+                    </Grid>
+                </Grid>
+                <Button type="submit" variant="contained" color="primary">
+                    Submit
+                </Button>
+            </StyledForm>
+        </StyledPaper>
+    );
 }
 
 export default UpdateCompany;

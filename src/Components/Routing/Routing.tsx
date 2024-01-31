@@ -22,6 +22,8 @@ import UpdateCompany from '../AdminArea/CompanyActions/UpdateCompany/UpdateCompa
 import Coupons from "../DefaultArea/Coupons/Coupons";
 import CouponDetails from "../DefaultArea/CouponDetails/CouponDetails";
 import CouponsFilter from "../DefaultArea/CouponsFilter/CouponsFilter";
+import AdminCompanyCoupons from "../AdminArea/CompanyActions/AdminCompanyCoupons/AdminCompanyCoupons";
+import AdminCustomerCoupons from "../AdminArea/CustomerActions/AdminCustomerCoupons/AdminCustomerCoupons";
 
 function Routing(): JSX.Element {
     const navigate = useNavigate();
@@ -38,6 +40,8 @@ function Routing(): JSX.Element {
             <Routes>
                 {userRole === 'ADMIN' ? (
                     <>
+                        <Route path="companycoupons/:id" element={<AdminCompanyCoupons/>}/>
+                        <Route path="customercoupons/:id" element={<AdminCustomerCoupons/>}/>
                         <Route path="/customers" element={<Customers/>}/>
                         <Route path="/customers/:id" element={<CustomerDetails/>}/>
                         <Route path="/addcustomer" element={<AddCustomer/>}/>
@@ -53,6 +57,7 @@ function Routing(): JSX.Element {
                             path="companies/updatecompany/:id"
                             element={<UpdateCompany/>}
                         />
+
                     </>
                 ) : (
                     <Route path="*" element={<Navigate to="/"/>}/>

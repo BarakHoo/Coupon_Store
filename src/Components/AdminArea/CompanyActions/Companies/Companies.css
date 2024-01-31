@@ -1,7 +1,11 @@
 .Companies {
   text-align: center;
-
+  display: flex;
+  flex-direction: column; /* Added to stack items vertically */
+  align-items: center; /* Center items horizontally */
 }
 
-
-
+.AddCompanyButton {
+  margin-bottom: 20px;
+  text-align: center;
+}

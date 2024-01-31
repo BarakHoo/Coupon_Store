@@ -32,6 +32,11 @@ class AdminService{
 
     }
 
+    public async getCustomerCoupons(id:number){
+        const customerResponse = await axios.get<Coupon[]>(`http://localhost:8080/admin/getcustomercoupons?id=${id}`)
+        return customerResponse.data;
+    }
+
     public async addCustomer(customer: Customer){
         const customerResponse = await axios.post<Customer>("http://localhost:8080/admin/addcustomer", customer)
         return customerResponse.data;

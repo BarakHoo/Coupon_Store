@@ -1,29 +1,45 @@
-import React from "react";
-import "./CouponDetails.css";
-import {NavLink, useNavigate, useParams} from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button, Typography } from "@mui/material";
 import Coupon from "../../../Models/Coupon";
 import generalService from "../../../Services/GeneralService";
 import CouponCard from "../CouponCard/CouponCard";
-import {Button} from "@mui/material";
-import {authStore} from "../../../Redux/AuthStore";
+import { authStore } from "../../../Redux/AuthStore";
 import customerService from "../../../Services/CustomerService";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import errorHandler from "../../../Services/ErrorHandler";
+
+import "./CouponDetails.css";
 
 function CouponDetails(): JSX.Element {
     const params = useParams();
     const id = +params.id!;
     const [coupon, setCoupon] = useState<Coupon | undefined>();
+    const [customerCoupons, setCustomerCoupons] = useState<Coupon[]>([]);
+    const [isCouponInCustomerList, setIsCouponInCustomerList] = useState<boolean>(false);
     const navigate = useNavigate();
+
     useEffect(() => {
-        generalService.getOneCoupon(id)
-            .then(c => setCoupon(c))
-            .catch(error => console.error("Error fetching coupon:", error));
+        // Fetch the current coupon
+        generalService
+            .getOneCoupon(id)
+            .then((c) => setCoupon(c))
+            .catch((error) => console.error("Error fetching coupon:", error));
+
+        // Fetch the customer's coupons
+        customerService
+            .getCustomerCoupons()
+            .then((coupons) => {
+                setCustomerCoupons(coupons);
+                // Check if the current coupon exists in the customer's coupon list
+                const isInList = coupons.some((c) => c.id === id);
+                setIsCouponInCustomerList(isInList);
+            })
+            .catch((error) => console.error("Error fetching customer coupons:", error));
     }, [id]);
 
     if (!coupon) {
-        return <p>Loading...</p>; // You can replace this with a loading spinner or other loading indicator
+        return <p>Loading...</p>;
     }
 
     function PurchaseCoupon() {
@@ -36,19 +52,29 @@ function CouponDetails(): JSX.Element {
             .catch((e) => errorHandler.showError(e));
     }
 
-
     return (
         <div className="CouponDetails">
-            <h3>Coupon ID: {coupon?.id}</h3>
-            <h1>{coupon?.title}</h1>
-            <h2>${coupon?.price}</h2>
-            <p>{coupon?.description}</p>
-            <h2>There are only {coupon?.amount} left in stock!</h2>
-            <h3>Available since: {coupon?.startDate?.toString()}</h3>
-            <h3>Expires at: {coupon?.endDate?.toString()}</h3>
-            <img src={coupon?.image} alt={coupon.title} />
-            <br/>
-            {authStore.getState().user?.role === "CUSTOMER" && <Button onClick={PurchaseCoupon} >BUY NOW!</Button>}
+            <CouponCard
+                id={coupon.id}
+                title={coupon.title}
+                description={coupon.description}
+                startDate={coupon.startDate}
+                endDate={coupon.endDate}
+                amount={coupon.amount}
+                price={coupon.price}
+                image={coupon.image}
+            />
+            <br />
+            {authStore.getState().user?.role === "CUSTOMER" && !isCouponInCustomerList && (
+                <Button variant="contained" onClick={PurchaseCoupon}>
+                    BUY NOW!
+                </Button>
+            )}
+            {isCouponInCustomerList && (
+                <Typography variant="subtitle1" color="primary">
+                    You already own this coupon!
+                </Typography>
+            )}
         </div>
     );
 }
