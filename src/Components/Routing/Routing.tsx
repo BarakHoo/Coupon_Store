@@ -24,6 +24,7 @@ import CouponDetails from "../DefaultArea/CouponDetails/CouponDetails";
 import CouponsFilter from "../DefaultArea/CouponsFilter/CouponsFilter";
 import AdminCompanyCoupons from "../AdminArea/CompanyActions/AdminCompanyCoupons/AdminCompanyCoupons";
 import AdminCustomerCoupons from "../AdminArea/CustomerActions/AdminCustomerCoupons/AdminCustomerCoupons";
+import Register from "../DefaultArea/Register/Register";
 
 function Routing(): JSX.Element {
     const navigate = useNavigate();
@@ -101,6 +102,7 @@ function Routing(): JSX.Element {
                 <Route path="/coupons" Component={Coupons}/>
                 <Route path="/coupons/:id" Component={CouponDetails}/>
                 <Route path="/coupons/filters" Component={CouponsFilter}/>
+                <Route path ="/register" Component={Register}/>
             </Routes>
         </div>
     );

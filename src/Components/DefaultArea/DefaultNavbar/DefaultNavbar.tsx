@@ -34,7 +34,7 @@ function DefaultNavbar(): JSX.Element {
                 } else if (updatedUser.firstName) {
                     setName(updatedUser.firstName);
                 } else {
-                    setName("Guest");
+                    setName(null); // Set name to null when no user is logged in
                 }
             }
         });
@@ -42,13 +42,13 @@ function DefaultNavbar(): JSX.Element {
         return () => {
             unsubscribe();
         };
-    }, [name]);
+    }, []);
 
     function logout() {
         authService
             .logout()
             .then(() => {
-                setName("Guest");
+                setName(null); // Set name to null after logout
                 navigate("/");
             })
             .catch((err) => errorHandler.showError(err));
@@ -57,8 +57,8 @@ function DefaultNavbar(): JSX.Element {
     return (
         <BottomNavigation className="DefaultNavbar" showLabels style={{ backgroundColor: "inherit" }}>
             <BottomNavigationAction
-                label={`Hello ${name ? `${name}!` : "Guest"}`}
-                icon={<Avatar><AccountCircleIcon /></Avatar>}
+                label={name ? `Hello ${name}!` : "Sign Up"}
+                icon={<Avatar><AccountCircleIcon /></Avatar>} component={NavLink} to="/register"
             />
             {authStore.getState().token.length > 0 ? (
                 <BottomNavigationAction label="Logout" icon={<ExitToAppIcon />} onClick={logout} />

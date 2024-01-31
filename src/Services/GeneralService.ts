@@ -1,6 +1,7 @@
 import axios from "axios";
 import Coupon from "../Models/Coupon";
 import Category from "../Models/Category";
+import Customer from "../Models/Customer";
 
 class GeneralService {
     public async getAllCoupons() {
@@ -26,6 +27,11 @@ class GeneralService {
     public async getOneCoupon(id: number) {
         const response = await axios.get<Coupon>(`http://localhost:8080/coupondetails/${id}`);
         return response.data;
+    }
+
+    public async customerRegister(customer:Customer){
+        const response = await axios.post<Customer>("http://localhost:8080/register", customer)
+        return response.data
     }
 }
 
