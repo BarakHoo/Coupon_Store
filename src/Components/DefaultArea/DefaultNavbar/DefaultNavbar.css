@@ -1,3 +1,6 @@
 .DefaultNavbar {
-	
+	display: flex;
+    flex-wrap: wrap;
 }
+
+

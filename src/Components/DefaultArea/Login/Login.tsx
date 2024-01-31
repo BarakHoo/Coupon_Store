@@ -35,8 +35,8 @@ function Login(): JSX.Element {
                 <FormControl>
                     <FormLabel>Welcome to John Coupon! Please log in.</FormLabel>
                     <br/>
-                    <TextField variant="outlined" label="Email" id="email" {...register("email")} />
-                    <TextField variant="outlined" label="Password" id="password" type="password" {...register("password")} />
+                    <TextField variant="filled" label="Email" id="email" {...register("email")} required />
+                    <TextField variant="filled" label="Password" id="password" type="password" {...register("password")} required />
                     <RadioGroup
                         aria-labelledby="demo-radio-buttons-group-label"
                         defaultValue="Company"

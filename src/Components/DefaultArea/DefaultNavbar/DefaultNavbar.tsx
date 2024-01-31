@@ -1,9 +1,15 @@
+import React from "react";
 import "./DefaultNavbar.css";
+import { BottomNavigation, BottomNavigationAction, Avatar } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { authStore } from "../../../Redux/AuthStore";
 import { useEffect, useState } from "react";
 import authService from "../../../Services/AuthService";
 import errorHandler from "../../../Services/ErrorHandler";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
 
 function DefaultNavbar(): JSX.Element {
     const [name, setName] = useState<string | null>(null);
@@ -49,19 +55,18 @@ function DefaultNavbar(): JSX.Element {
     }
 
     return (
-        <div className="DefaultNavbar">
-            Hello {name ? `${name}!` : "Guest"}
-            <br />
+        <BottomNavigation className="DefaultNavbar" showLabels style={{ backgroundColor: "inherit" }}>
+            <BottomNavigationAction
+                label={`Hello ${name ? `${name}!` : "Guest"}`}
+                icon={<Avatar><AccountCircleIcon /></Avatar>}
+            />
             {authStore.getState().token.length > 0 ? (
-                <a href="#" onClick={logout}>
-                    Logout
-                </a>
+                <BottomNavigationAction label="Logout" icon={<ExitToAppIcon />} onClick={logout} />
             ) : (
-                <NavLink to="">Login</NavLink>
+                <BottomNavigationAction label="Login" icon={<VpnKeyIcon />} component={NavLink} to="" />
             )}
-            <br />
-            <NavLink to="/coupons">Coupons</NavLink>
-        </div>
+            <BottomNavigationAction icon={<LocalOfferIcon />} label="All Coupons" component={NavLink} to="/coupons" />
+        </BottomNavigation>
     );
 }
 
