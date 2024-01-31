@@ -1,6 +1,12 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardMedia, Typography, Button } from "@mui/material";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+    Card,
+    CardContent,
+    CardMedia,
+    Typography,
+    Button,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./CompanyCouponCard.css";
 import companyService from "../../../../Services/CompanyService";
@@ -31,6 +37,7 @@ function CompanyCouponCard({
                                image,
                            }: CompanyCouponCardProps): JSX.Element {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleUpdateClick = () => {
         navigate("/companycoupons/updatecoupon/" + id);
@@ -49,10 +56,13 @@ function CompanyCouponCard({
 
     return (
         <Card className="CompanyCouponCard">
-            <NavLink to={"/coupons/" + id}>
-                <CardMedia component="img" height="140" image={image} alt={title} />
-            </NavLink>
-            <CardContent>
+            <CardMedia
+                component="img"
+                height="140"
+                image={image}
+                alt={title}
+                sx={{ '&.MuiCardMedia-img': { objectFit: 'cover' }, '&.MuiCardMedia-root': { color: 'black' } }}
+            />            <CardContent>
                 <Typography variant="body1" color="text.secondary">
                     <strong>{title}</strong>
                 </Typography>
@@ -71,6 +81,13 @@ function CompanyCouponCard({
                 <Typography variant="body2" color="text.secondary">
                     Expires at: {endDate.toString()}
                 </Typography>
+                {location.pathname !== `/coupons/${id}` && (
+                    <NavLink to={`/coupons/${id}`} className="details-link">
+                        More Details
+                    </NavLink>
+                )}
+                <br/>
+                <br/>
                 <Button variant="contained" onClick={handleUpdateClick}>
                     Update
                 </Button>

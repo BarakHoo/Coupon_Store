@@ -12,6 +12,7 @@ import CouponCard from "../../DefaultArea/CouponCard/CouponCard";
 import "./MyCoupons.css";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {Search} from "@mui/icons-material";
 
 function MyCoupons(): JSX.Element {
     const [couponList, setCouponList] = useState<Coupon[] | undefined>();
@@ -35,7 +36,7 @@ function MyCoupons(): JSX.Element {
 
     return (
         <div className="MyCoupons">
-            <Button variant="contained" color="primary" component={NavLink} to="/mycoupons/filters">
+            <Button variant="contained" color="primary" component={NavLink} to="/mycoupons/filters"  startIcon={<Search />}>
                 Advanced Search
             </Button>
             <br />

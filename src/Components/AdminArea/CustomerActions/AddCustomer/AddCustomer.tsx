@@ -111,6 +111,7 @@ function AddCustomer(): JSX.Element {
                         )}
                     </Grid>
                 </Grid>
+                <br/>
                 <Button type="submit" variant="contained" color="primary">
                     Submit
                 </Button>

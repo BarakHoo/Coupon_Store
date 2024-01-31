@@ -11,6 +11,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {Button} from "@mui/material";
 import {NavLink} from "react-router-dom";
+import {Search} from "@mui/icons-material";
 
 
 function Coupons(): JSX.Element {
@@ -26,7 +27,7 @@ function Coupons(): JSX.Element {
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 4, // Display 3 items at a time
         slidesToScroll: 1,
@@ -36,7 +37,13 @@ function Coupons(): JSX.Element {
 
     return (
         <div className="Coupons">
-            <Button variant="contained" color="primary" component={NavLink} to="/coupons/filters">
+            <Button
+                variant="contained"
+                color="primary"
+                component={NavLink}
+                to="/coupons/filters"
+                startIcon={<Search />}
+            >
                 Advanced Search
             </Button>
             <Slider {...settings}>

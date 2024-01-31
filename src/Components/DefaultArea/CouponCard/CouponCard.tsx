@@ -30,7 +30,16 @@ function CouponCard({
 
     return (
         <Card className="CouponCard">
-            <CardMedia component="img" height="140" image={image} alt={title} />
+            <CardMedia
+                component="img"
+                height="140"
+                image={image}
+                alt={title}
+                sx={{ '&.MuiCardMedia-img': { objectFit: 'cover' }, '&.MuiCardMedia-root': { color: 'black' } }}
+            />
+            <Typography variant="body1" color="text.secondary">
+                <strong>Coupon ID:{id}</strong>
+            </Typography>
             <CardContent>
                 <Typography variant="body1" color="text.secondary">
                     <strong>{title}</strong>
