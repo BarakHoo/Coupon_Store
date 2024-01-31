@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/admin")
@@ -66,6 +67,11 @@ public class AdminController {
     @GetMapping("/getcompanycoupons")
     public List<Coupon> getCompanyCoupons(@RequestParam int id) throws UnauthorizedException {
         return getAdminFacade().getCompanyCoupons(id);
+    }
+
+    @GetMapping("/getcustomercoupons")
+    public Set<Coupon> getCustomerCoupons(@RequestParam int id) throws UnauthorizedException, CustomerException {
+        return getAdminFacade().getCustomerCoupons(id);
     }
 
     @GetMapping("/getcompany/{id}")

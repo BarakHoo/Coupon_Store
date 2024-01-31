@@ -10,6 +10,7 @@ import com.example.JohnCouponPart2.exceptions.CustomerException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 public class AdminService extends ClientService {
@@ -114,6 +115,12 @@ public class AdminService extends ClientService {
         } else {
             throw new CustomerException("Customer doesn't exist!");
         }
+    }
+
+    public Set<Coupon> getCustomerCoupons(int id) throws CustomerException {
+        Customer currentCustomer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerException("Customer doesn't exist!"));
+        return currentCustomer.getCoupons();
     }
 
 
