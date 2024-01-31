@@ -1,22 +1,35 @@
 package com.example.JohnCouponPart2.services;
-
 import com.example.JohnCouponPart2.Repositories.CouponRepository;
+import com.example.JohnCouponPart2.Repositories.CustomerRepository;
 import com.example.JohnCouponPart2.beans.Category;
 import com.example.JohnCouponPart2.beans.Coupon;
-import com.example.JohnCouponPart2.exceptions.CompanyException;
+import com.example.JohnCouponPart2.beans.Customer;
 import com.example.JohnCouponPart2.exceptions.CouponException;
+import com.example.JohnCouponPart2.exceptions.CustomerException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GeneralService {
 
+    private CustomerRepository customerRepository;
     private CouponRepository couponRepository;
 
-    public GeneralService(CouponRepository couponRepository) {
+    public GeneralService(CustomerRepository customerRepository, CouponRepository couponRepository) {
+        this.customerRepository = customerRepository;
         this.couponRepository = couponRepository;
+    }
+
+    public Customer customerRegister (Customer customer) throws CustomerException {
+        // Check if a customer with the same email already exists
+        if (!customerRepository.existsByEmail(customer.getEmail())) {
+            // Save the new customer
+            customerRepository.save(customer);
+            return customer;
+        } else {
+            throw new CustomerException("Email is already in use.");
+        }
     }
 
     public List<Coupon> getAllCoupons(){

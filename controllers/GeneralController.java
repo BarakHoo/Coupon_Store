@@ -2,12 +2,12 @@ package com.example.JohnCouponPart2.controllers;
 
 import com.example.JohnCouponPart2.beans.Category;
 import com.example.JohnCouponPart2.beans.Coupon;
+import com.example.JohnCouponPart2.beans.Customer;
 import com.example.JohnCouponPart2.exceptions.CouponException;
+import com.example.JohnCouponPart2.exceptions.CustomerException;
 import com.example.JohnCouponPart2.services.GeneralService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -18,6 +18,12 @@ public class GeneralController {
 
     public GeneralController(GeneralService generalService) {
         this.generalService = generalService;
+    }
+
+    @PostMapping("/register")
+    public String customerRegister(@RequestBody Customer customer) throws CustomerException {
+        generalService.customerRegister(customer);
+        return "Account successfully created!";
     }
 
     @GetMapping("/getcoupons")
