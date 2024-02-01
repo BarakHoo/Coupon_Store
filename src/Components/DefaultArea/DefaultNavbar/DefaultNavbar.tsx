@@ -56,10 +56,17 @@ function DefaultNavbar(): JSX.Element {
 
     return (
         <BottomNavigation className="DefaultNavbar" showLabels style={{ backgroundColor: "inherit" }}>
-            <BottomNavigationAction
-                label={name ? `Hello ${name}!` : "Sign Up"}
-                icon={<Avatar><AccountCircleIcon /></Avatar>} component={NavLink} to="/register"
-            />
+            {authStore.getState().token.length > 0 ? (
+                <BottomNavigationAction
+                    label={`Hello ${name}!`}
+                    icon={<Avatar><AccountCircleIcon /></Avatar>}
+                />
+            ) : (
+                <BottomNavigationAction
+                    label={`Sign Up`}
+                    icon={<Avatar><AccountCircleIcon /></Avatar>} component={NavLink} to="/register"
+                />
+            )}
             {authStore.getState().token.length > 0 ? (
                 <BottomNavigationAction label="Logout" icon={<ExitToAppIcon />} onClick={logout} />
             ) : (
